@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "207745791533",
+    "firebase_url": "https://myapp-da297-default-rtdb.asia-southeast1.firebasedatabase.app",
     "project_id": "myapp-da297",
     "storage_bucket": "myapp-da297.firebasestorage.app"
   },
@@ -9,10 +10,18 @@
       "client_info": {
         "mobilesdk_app_id": "1:207745791533:android:62d6f9ad967b3ec63b6aa4",
         "android_client_info": {
-          "package_name": "com.app"
+          "package_name": "com.example.myapp"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "207745791533-nc7bdd7fru0gje17uhishg0m2ege2mh1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.myapp",
+            "certificate_hash": "d86fd70e8f62e13a4d228d8e3bd250f90e83bd94"
+          }
+        },
         {
           "client_id": "207745791533-ceo6is9kad52osh9337jpepiq14pnnr1.apps.googleusercontent.com",
           "client_type": 3
@@ -29,6 +38,13 @@
             {
               "client_id": "207745791533-ceo6is9kad52osh9337jpepiq14pnnr1.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "207745791533-8jpninq0j0j30aj23d3t9fo46uumjh5t.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.myapp"
+              }
             }
           ]
         }
