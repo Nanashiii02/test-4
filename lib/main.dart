@@ -14,9 +14,11 @@ import 'weather_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  print("Starting Firebase initialization...");
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  print("Firebase initialized successfully!");
   runApp(const MyApp());
 }
 
