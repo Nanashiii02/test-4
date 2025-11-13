@@ -24,9 +24,11 @@ class _JournalPageState extends State<JournalPage> {
     super.initState();
     _user = _authService.currentUser;
     _authService.authStateChanges.listen((user) {
-      setState(() {
-        _user = user;
-      });
+      if (mounted) {  // FIXED: Check if mounted before setState
+        setState(() {
+          _user = user;
+        });
+      }
     });
   }
 
@@ -100,17 +102,20 @@ class _JournalBodyState extends State<JournalBody> {
   }
 
   void _viewEntry(String docId) {
-    setState(() {
-      _selectedEntryId = docId;
-    });
+    if (mounted) {  // FIXED: Check if mounted
+      setState(() {
+        _selectedEntryId = docId;
+      });
+    }
   }
 
   void _closeEntry() {
-    setState(() {
-      _selectedEntryId = null;
-    });
+    if (mounted) {  // FIXED: Check if mounted
+      setState(() {
+        _selectedEntryId = null;
+      });
+    }
   }
-
 
   Future<void> _addJournalEntry(String title, String text) async {
     if (text.isNotEmpty && title.isNotEmpty) {
@@ -189,7 +194,7 @@ class _JournalBodyState extends State<JournalBody> {
     );
 
     if (confirmed == true) {
-       try {
+      try {
         await _journalCollection.doc(docId).delete();
         developer.log('Journal entry deleted.', name: 'journal.firestore');
         if (mounted) {
@@ -213,6 +218,7 @@ class _JournalBodyState extends State<JournalBody> {
       }
     }
   }
+
   void _showAddEntryDialog() {
     _showJournalEntryDialog();
   }
@@ -224,7 +230,7 @@ class _JournalBodyState extends State<JournalBody> {
 
     showDialog(
       context: context,
-      builder: (context) {
+      builder: (dialogContext) {  // FIXED: Use different context name
         return AlertDialog(
           title: Text(isEditing ? 'Edit Journal Entry' : 'New Journal Entry'),
           content: Column(
@@ -244,7 +250,7 @@ class _JournalBodyState extends State<JournalBody> {
                 controller: textController,
                 decoration: const InputDecoration(
                   labelText: 'Content',
-                  hintText: 'Ewan koooooo',
+                  hintText: 'Write your thoughts here...',
                   border: OutlineInputBorder(),
                 ),
                 maxLines: 5,
@@ -254,7 +260,7 @@ class _JournalBodyState extends State<JournalBody> {
           actions: [
             TextButton(
               child: const Text('Cancel'),
-              onPressed: () => Navigator.of(context).pop(),
+              onPressed: () => Navigator.of(dialogContext).pop(),
             ),
             ElevatedButton(
               child: Text(isEditing ? 'Save' : 'Add'),
@@ -266,7 +272,7 @@ class _JournalBodyState extends State<JournalBody> {
                 } else {
                   _addJournalEntry(title, text);
                 }
-                Navigator.of(context).pop();
+                Navigator.of(dialogContext).pop();
               },
             ),
           ],
@@ -275,18 +281,17 @@ class _JournalBodyState extends State<JournalBody> {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       backgroundColor: const Color(0xFFF0F0F0),
+      backgroundColor: const Color(0xFFF0F0F0),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 20),
-             Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 AnimatedOpacity(
@@ -429,7 +434,7 @@ class _JournalListItem extends StatelessWidget {
     required this.onDelete,
   });
 
- @override
+  @override
   Widget build(BuildContext context) {
     final title = data['title'] as String? ?? 'No Title';
     final text = data['text'] as String? ?? 'No text available.';
@@ -499,7 +504,6 @@ class _JournalListItem extends StatelessWidget {
   }
 }
 
-
 class _JournalDetailView extends StatelessWidget {
   final String docId;
   final CollectionReference journalCollection;
@@ -541,24 +545,24 @@ class _JournalDetailView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                 Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     IconButton(
                       icon: const Icon(Icons.arrow_back_ios),
                       onPressed: onClose,
                     ),
-                     GestureDetector(
-                        onTap: () => onEdit(data),
-                        child: Container(
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            color: Colors.blue.withAlpha((255 * 0.1).round()),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: const Icon(Icons.edit, size: 24, color: Colors.blue),
+                    GestureDetector(
+                      onTap: () => onEdit(data),
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: Colors.blue.withAlpha((255 * 0.1).round()),
+                          borderRadius: BorderRadius.circular(12),
                         ),
+                        child: const Icon(Icons.edit, size: 24, color: Colors.blue),
                       ),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 24),

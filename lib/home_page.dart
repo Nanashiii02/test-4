@@ -181,9 +181,9 @@ class _HomePageState extends State<HomePage> {
                         color: Colors.black54,
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      child: Row(
+                      child: const Row(
                         mainAxisSize: MainAxisSize.min,
-                        children: const [
+                        children: [
                           Icon(Icons.logout, size: 16, color: Colors.white),
                           SizedBox(width: 4),
                           Text(

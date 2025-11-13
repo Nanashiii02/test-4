@@ -8,6 +8,9 @@
     pkgs.jdk21
     pkgs.unzip
     pkgs.google-chrome
+    pkgs.flutter
+    pkgs.dart
+    pkgs.cmake
   ];
   # Sets environment variables in the workspace
   env = {};
@@ -19,7 +22,9 @@
     ];
     workspace = {
       # Runs when a workspace is first created with this `dev.nix` file
-      onCreate = { };
+      onCreate = {
+        flutter-licenses = "yes | flutter doctor --android-licenses";
+      };
       # To run something each time the workspace is (re)started, use the `onStart` hook
     };
     # Enable previews and customize configuration

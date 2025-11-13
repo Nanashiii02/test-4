@@ -63,7 +63,7 @@ class LoginPageState extends State<LoginPage> {
                   Align(
                     alignment: Alignment.centerRight,
                     child: TextButton(
-                      onPressed: () => context.go('/registration'),
+                      onPressed: () => context.go('/register'),
                       child: const Text('Register Here'),
                     ),
                   ),
